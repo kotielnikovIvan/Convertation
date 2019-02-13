@@ -1,74 +1,75 @@
 package info.sjd;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class ApplicationRunner {
-private static Logger logger = Logger.getLogger(ApplicationRunner.class.getSimpleName());
+
+	private static Logger logger = Logger.getLogger(ApplicationRunner.class.getSimpleName());
 	
-	public static int byDivisionRemainder(Integer number) {
-		String valueByString = number.toString();
+	public static int byDivisionRemainder(int number) {
+		String valueByString = String.valueOf(number);
 		int amountOfNumerous = valueByString.length();
 		int result = 0;
 		while(amountOfNumerous != 0) {
 			result += number % Math.pow(10, amountOfNumerous) / Math.pow(10,  amountOfNumerous - 1);
 			amountOfNumerous--; 
-		}
+		} 
 		return result;
 	}  
 	
 	public static int byConvertToChar(int number) {
-		Integer wrappedToIntNumber = number;
-		String  wrappedToStringNumber = wrappedToIntNumber.toString();
-		char[] numerals = wrappedToStringNumber.toCharArray();
-		  
+		String  strNumber = String.valueOf(number);	  
 		int sumOfNumerals = 0;
-		for(char numeral: numerals) { 
-			sumOfNumerals += Character.getNumericValue(numeral);
-			
-		}  
-		return sumOfNumerals;
-	}
-	 
-	public static int findPalindrom(int value1, int value2) {
-		 
-		Integer value = value1 * value2;
-		String stringValue = value.toString();
-		char[] arrOfNumerals = stringValue.toCharArray();
-
-		Integer maxPalindrom = 0;
-		for ( int i = 0; i < arrOfNumerals.length - 2; i++) {
-			for ( int j = i + 2; j < arrOfNumerals.length; j ++) {
-				boolean isPalindrom = false;
-				if (arrOfNumerals[i] == arrOfNumerals[j]) {
-					isPalindrom = true;
-					int everageAmountOfNumerals = (j + i) / 2;
-					for(int k = i; k < everageAmountOfNumerals; k++) {
-						for ( int l = j; l > everageAmountOfNumerals; l--) {
-							if (arrOfNumerals[k] == arrOfNumerals[l]) {
-								isPalindrom = true;
-							} 
-							else isPalindrom = false;
-						}
-					}
-					if(Integer.valueOf(String.copyValueOf(arrOfNumerals, i, j - i + 1)) > maxPalindrom && isPalindrom == true) {
-						maxPalindrom = Integer.valueOf(String.copyValueOf(arrOfNumerals, i, j - i + 1));
-					}
-				}
-			} 
-		}
-		return maxPalindrom;
+		int i = 0;
+		while(i < strNumber.length()) { 
+			sumOfNumerals += Character.getNumericValue(strNumber.charAt(i));
+			i++;
+		}   
+		return sumOfNumerals;  
 	}
 	
+	public static boolean isPalindrom(int value) {
+		StringBuffer strBuffer = new StringBuffer(String.valueOf(value));
+		int i = 0;
+		int j = strBuffer.length() - 1;
+		while(i < j) {
+			if(strBuffer.charAt(i) != strBuffer.charAt(j)) {
+				return false;
+			}
+			i++; 
+			j--;
+		} 
+		return true;
+	} 
+	  
+	public static int findPalindrom() {
+		List<Integer> palindroms = new ArrayList<>();
+		for ( int i = 100; i < 999; i++) {
+			for ( int j = 100; j < 999; j++) {
+				if(isPalindrom(i * j) == true) {
+					palindroms.add(i * j);
+				}  
+			}
+		}
+		//showList(palindroms);
+		return Collections.max(palindroms); 
+	}
+	
+	public static void showList(List<Integer> list) {
+		for(int value: list) {
+			logger.info("Value of Palindrom: " + value);
+		}
+	}
+	 
 	public static void main(String[] args) { 
 		 
-		int number = 12345;
+		int number = 1234567; 
 		 
 		logger.info("By division remainder: " +byDivisionRemainder(number));
 		logger.info("By convert to char: " +byConvertToChar(number));
-		logger.info("Max palindrom: " + findPalindrom(4602, 3178));
-		
-		
-
+		logger.info("Max palindrom: " + findPalindrom());
 		 
-		
 	} 
 }

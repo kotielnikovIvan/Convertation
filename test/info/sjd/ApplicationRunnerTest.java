@@ -21,7 +21,7 @@ class ApplicationRunnerTest {
 	@Test
 	void testFindPalindrom() {
 		ApplicationRunner runner = new ApplicationRunner();
-		assertEquals(515, runner.findPalindrom(4602, 3178));
-	}
+		assertEquals(906609, runner.findPalindrom());
+	} 
 
 }
